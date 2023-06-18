@@ -25,7 +25,12 @@ const s3Client = new S3Client({
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 25 * 1024 * 1024, // 25MB in bytes
+  },
+});
 
 app.post("/api/upload", upload.single("file"), async (req, res) => {
   try {
